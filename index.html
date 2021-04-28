@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mediawiki pixel art logos</title>
+    <style>
+      html,
+      body {
+        min-height: 100%;
+        margin: 0;
+      }
+      body {
+        display: flex;
+        flex-direction: row;
+
+        font-family: Silkscreen;
+      }
+      img {
+        image-rendering: pixelated;
+      }
+      #light,
+      #dark {
+        flex: 1;
+      }
+      #light {
+        background-color: #fefefe;
+        color: #222;
+      }
+      #dark {
+        background-color: #222;
+        color: #eee;
+      }
+
+      h2 {
+        text-align: center;
+      }
+
+      h3 {
+        font-weight: normal;
+      }
+
+      .logo {
+        margin: 128px 0;
+      }
+
+      .variant {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 32px;
+        margin: 32px;
+      }
+
+      .variant h3 {
+        width: 200px;
+      }
+
+      .mediawiki-text > span {
+        font-size: 1.3em;
+      }
+
+      .logo-with-text > * {
+        vertical-align: middle;
+      }
+
+      .logo-with-text > .mediawiki-text {
+        margin-left: 0.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="light"></div>
+    <div id="dark"></div>
+    <script>
+      let logos = [
+        {
+          name: "v2",
+          variants: [
+            {
+              name: "no-outline",
+              src: "mediawiki-logo-2-32x32.png",
+            },
+            {
+              name: "outline-mini",
+              src: "mediawiki-logo-2-32x32-outline-mini.png",
+            },
+            { name: "outline", src: "mediawiki-logo-2-32x32-outline.png" },
+          ],
+        },
+        {
+          name: "v3",
+          variants: [
+            { name: "no-outline", src: "mediawiki-logo-32x32-3.png" },
+            {
+              name: "outline-mini",
+              src: "mediawiki-logo-32x32-3-outline-mini.png",
+            },
+            { name: "outline", src: "mediawiki-logo-32x32-3-outline.png" },
+          ],
+        },
+        {
+          name: "v4",
+          variants: [
+            { name: "no-outline", src: "mediawiki-logo-32x32-4.png" },
+            {
+              name: "outline-mini",
+              src: "mediawiki-logo-32x32-4-outline-mini.png",
+            },
+          ],
+        },
+      ];
+
+      let light = document.querySelector("#light");
+      let dark = document.querySelector("#dark");
+
+      let logoDiv = document.createElement("div");
+      logoDiv.className = "logo";
+      let title = document.createElement("h2");
+      title.textContent = "All";
+      logoDiv.appendChild(title);
+
+      let mediawikiText = document.createElement("span");
+      mediawikiText.className = "mediawiki-text";
+      mediawikiText.innerHTML = "<span>M</span>edia<span>W</span>iki";
+
+      for (let logo of logos) {
+        let variantDiv = document.createElement("div");
+        variantDiv.className = "variant";
+        for (let { src, name } of logo.variants) {
+          let div = document.createElement("div");
+          div.className = "logo-with-text";
+
+          let img = document.createElement("img");
+          img.src = src;
+          img.width = 32;
+          img.height = 32;
+          div.appendChild(img);
+          div.appendChild(mediawikiText.cloneNode(true));
+
+          variantDiv.appendChild(div);
+        }
+        logoDiv.appendChild(variantDiv);
+      }
+      light.appendChild(logoDiv);
+      dark.appendChild(logoDiv.cloneNode(true));
+
+      for (let logo of logos) {
+        let logoDiv = document.createElement("div");
+        logoDiv.className = "logo";
+
+        let title = document.createElement("h2");
+        title.textContent = logo.name;
+        logoDiv.appendChild(title);
+
+        for (let { src, name } of logo.variants) {
+          let variantDiv = document.createElement("div");
+          variantDiv.className = "variant";
+
+          let title = document.createElement("h3");
+          title.textContent = name;
+          variantDiv.appendChild(title);
+
+          for (let zoom = 1; zoom <= 4; zoom++) {
+            let img = document.createElement("img");
+            img.src = src;
+            img.width = 32 * zoom;
+            img.height = 32 * zoom;
+            variantDiv.appendChild(img);
+          }
+
+          logoDiv.appendChild(variantDiv);
+        }
+
+        light.appendChild(logoDiv);
+        dark.appendChild(logoDiv.cloneNode(true));
+      }
+    </script>
+  </body>
+</html>
